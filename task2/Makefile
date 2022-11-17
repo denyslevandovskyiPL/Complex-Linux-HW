@@ -1,6 +1,7 @@
 PACKAGE_NAME1 = upper
 PACKAGE_NAME2 = lower
 LIB_NAME = libconvert.so
+LIB_PATH = /usr/lib/
 FLAGS = -Wall -Werror -Wextra
 
 all: upper lower libsetup
@@ -18,8 +19,8 @@ lib: links
 	gcc -shared -o ${LIB_NAME} libconvert.o
 
 libsetup:
-	sudo cp `pwd`/${LIB_NAME} /usr/lib
-	sudo chmod 0755 /usr/lib/${LIB_NAME}
+	sudo cp `pwd`/${LIB_NAME} ${LIB_PATH}
+	sudo chmod 0755 ${LIB_PATH}${LIB_NAME}
 	sudo ldconfig
 	unset LD_LIBRARY_PATH
 	gcc uper.c -l convert ${FLAGS} -o ${PACKAGE_NAME1}
@@ -34,4 +35,5 @@ clean-all: clean
 	rm -f ${PACKAGE_NAME1}
 	rm -f ${PACKAGE_NAME2}
 	rm -f ${LIB_NAME}
+	sudo rm -f ${LIB_PATH}${LIB_NAME}
 
